@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faImages } from '@fortawesome/free-solid-svg-icons'
+import { faImage, faImages,  faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
 
 export default props => 
@@ -18,4 +18,5 @@ export default props =>
       </label>
       <input type='file' id='multi' onChange={props.onChange} multiple />
     </div>
+
   </div>

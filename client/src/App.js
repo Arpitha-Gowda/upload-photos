@@ -3,6 +3,8 @@ import Notifications, { notify } from 'react-notify-toast'
 import Spinner from './Spinner'
 import Images from './Images'
 import Buttons from './Buttons'
+import Photos from './Photos'
+
 import './App.css'
 
 const toastColor = { 
@@ -83,6 +85,10 @@ export default class App extends Component {
     })
   }
 
+  onClick = e => {
+
+  }
+
   filter = id => {
     return this.state.images.filter(image => image.public_id !== id)
   }
@@ -101,8 +107,8 @@ export default class App extends Component {
     
     const content = () => {
       switch(true) {
-        // case loading:
-        //   return <WakeUp />
+        case loading:
+            return <Photos onClick={this.onClick} />
         case uploading:
           return <Spinner />
         case images.length > 0:
@@ -112,7 +118,7 @@ export default class App extends Component {
                   onError={this.onError}
                  />
         default:
-          return <Buttons onChange={this.onChange} />
+            return <Buttons onChange={this.onChange} />
       }
     }
 
