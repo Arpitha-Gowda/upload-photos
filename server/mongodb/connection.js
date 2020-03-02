@@ -1,0 +1,30 @@
+const MongoClient = require('mongodb').MongoClient;
+
+// Connection URL
+const url = `mongodb://192.168.2.30:27017`;
+var connect;
+
+module.exports = async () => {
+    try {
+        connect = await MongoClient.connect(url,
+            { useNewUrlParser: true, native_parser: true, autoReconnect: true, poolSize: 10 });
+        const db = connect.db('myphotos');
+        console.log('Mongodb default connection open ');
+
+        return {
+            db,
+            models: {
+                users: db.collection('users'),
+            }
+        };
+    } catch (err) {
+        console.log(`Mongodb default connection error: ${err}`);
+        throw err;
+    } finally {
+        process.on('SIGINT', function () {
+            console.log('Mongodb default connection disconnected through app termination');
+            connect.close();
+            process.exit(0);
+        });
+    }
+};
