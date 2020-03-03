@@ -4,6 +4,8 @@ import Spinner from './Spinner'
 import Images from './Images'
 import Buttons from './Buttons'
 import Photos from './Photos'
+import Login from './Login'
+
 // import Carousel, { Modal, ModalGateway } from 'react-images';
 import './App.css'
 
@@ -128,14 +130,8 @@ export default class App extends Component {
     const content = () => {
       switch(true) {
         case loading:
-          //   <ModalGateway>
-          //   {loading ? (
-          //     <Modal onClose={this.toggleModal}>
-          //       <Carousel views={images} />
-          //     </Modal>
-          //   ) : null}
-          // </ModalGateway>
-            return <Photos onClick={this.onClick} />
+          return <Login/>
+            // return <Photos onClick={this.onClick} />        
         case uploading:
           return <Spinner />
         case images.length > 0:
