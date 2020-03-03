@@ -1,14 +1,11 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faImages,  faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import Img from 'react-image'
 
-
-export default props => 
-  <div className='buttons fadein'>
-    <div className='button'>
-      <label htmlFor='single'>
-        <FontAwesomeIcon icon={faFolderOpen} color='#3B5998' size='10x' />
-      </label>
-      <input type='file' id='single' onClick={props.onClick} />
-    </div>
-  </div>
+const Photos = (props) => {
+  console.log('checking', props);
+  
+  return (
+    <Img src={props.photos} onClick={props.onClick()} />
+  )
+}
+export default Photos;

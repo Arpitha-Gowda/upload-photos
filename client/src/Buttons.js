@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage, faImages,  faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import { faImage, faImages } from '@fortawesome/free-solid-svg-icons'
 
 
 export default props => 

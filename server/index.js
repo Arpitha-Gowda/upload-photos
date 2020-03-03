@@ -34,17 +34,30 @@
     next();
   });
     
-  app.post('/api/photo', upload.array('photo'), async (req, res, next) => {
+  app.post('/api/photo', upload.array('photo'), async (req, res) => {
     console.log('request', req.files);
     try {
       req.files.forEach(async (file) => {
-        await req.models.users.insertOne({'imagePath' : './public/uploads/' + file.filename }, { w: 1 }); 
+        await req.models.photos.insertOne({'imagePath' : './public/uploads/' + file.filename }, { w: 1 }); 
       });
       res.json({'message': 'File uploaded successfully'});
     } catch (err) {
         throw (Error(err));
     }
   });
+
+  app.get('/api/photo', async(req, res) => {
+    try {
+        let result = await req.models.photos.find().toArray();
+        console.log(result);
+        
+        const imgArray= result.map(element => "/home/arpitha/akbar/upload-photos-master/server/public/uploads"+element.imagePath);
+        console.log(imgArray);
+        res.send(imgArray)
+    } catch (err) {
+      throw (Error(err));
+    }
+  })
 
   app.listen(process.env.PORT || 4000, () => console.log('👍'))
 })();

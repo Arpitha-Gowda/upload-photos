@@ -4,7 +4,7 @@ import Spinner from './Spinner'
 import Images from './Images'
 import Buttons from './Buttons'
 import Photos from './Photos'
-
+// import Carousel, { Modal, ModalGateway } from 'react-images';
 import './App.css'
 
 const toastColor = { 
@@ -38,7 +38,6 @@ export default class App extends Component {
       formData.append('photo', file, file.name);
     }
     // files.forEach((file, i) => {
-
     //   // if (types.every(type => file.type !== type)) {
     //   //   errs.push(`'${file.type}' is not a supported format`)
     //   // }
@@ -46,9 +45,6 @@ export default class App extends Component {
     //   // if (file.size > 150000) {
     //   //   errs.push(`'${file.name}' is too large, please pick a smaller file`)
     //   // }
-    //   console.log(file)
-
-    //   formData.append('photo[]', file);
     // })
 
     if (errs.length) {
@@ -68,16 +64,12 @@ export default class App extends Component {
       return res.json()
     })
     .then(images => {
-      console.log('wsd',images);
-      
       this.setState({
         uploading: false, 
         images
       })
     })
     .catch(err => {
-      console.log('wsd',err);
-
       err.json().then(e => {
         this.toast(e.message, 'custom', 2000, toastColor)
         this.setState({ uploading: false })
@@ -86,7 +78,35 @@ export default class App extends Component {
   }
 
   onClick = e => {
+    // this.setState({ loading : true })
 
+    fetch(`http://localhost:4000/api/photo`, {
+      method: 'GET'
+    })
+    .then(res => {
+      console.log(res);
+      
+      if (!res.ok) {
+        throw res
+      }
+      return res.json()
+    })
+    .then(images => {
+      this.setState({
+        uploading: false, 
+        images
+      })
+    })
+    .catch(err => {
+      err.json().then(e => {
+        this.toast(e.message, 'custom', 2000, toastColor)
+        this.setState({ uploading: false })
+      })
+    })
+  }
+
+  toggleModal = () => {
+    this.setState(state => ({ loading: !state.loading }));
   }
 
   filter = id => {
@@ -108,6 +128,13 @@ export default class App extends Component {
     const content = () => {
       switch(true) {
         case loading:
+          //   <ModalGateway>
+          //   {loading ? (
+          //     <Modal onClose={this.toggleModal}>
+          //       <Carousel views={images} />
+          //     </Modal>
+          //   ) : null}
+          // </ModalGateway>
             return <Photos onClick={this.onClick} />
         case uploading:
           return <Spinner />
