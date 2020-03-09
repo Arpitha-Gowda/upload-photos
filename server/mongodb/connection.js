@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-const url = `mongodb://localhost:27017`;
+const url = `mongodb://192.168.2.30:27017`;
 var connect;
 
 module.exports = async () => {

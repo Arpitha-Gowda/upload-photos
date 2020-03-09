@@ -15,7 +15,7 @@
     extended: false
   }));
 
-  app.use(express.static('public'));
+  app.use('/static',express.static('public'));
 
   var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -38,7 +38,7 @@
     console.log('request', req.files);
     try {
       req.files.forEach(async (file) => {
-        await req.models.photos.insertOne({'imagePath' : './public/uploads/' + file.filename }, { w: 1 }); 
+        await req.models.photos.insertOne({'imagePath' : '/uploads/' + file.filename }, { w: 1 }); 
       });
       res.json({'message': 'File uploaded successfully'});
     } catch (err) {
@@ -51,7 +51,7 @@
         let result = await req.models.photos.find().toArray();
         console.log(result);
         
-        const imgArray= result.map(element => "/home/arpitha/akbar/upload-photos-master/server/public/uploads"+element.imagePath);
+        const imgArray= result.map(element => "http://192.168.2.30:4000/static"+element.imagePath);
         console.log(imgArray);
         res.send(imgArray)
     } catch (err) {

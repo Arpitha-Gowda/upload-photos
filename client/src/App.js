@@ -4,6 +4,8 @@ import Spinner from './Spinner'
 import Images from './Images'
 import Buttons from './Buttons'
 import Photos from './Photos'
+import Display from './Display'
+
 import Login from './Login'
 
 // import Carousel, { Modal, ModalGateway } from 'react-images';
@@ -19,7 +21,9 @@ export default class App extends Component {
   state = {
     loading: true,
     uploading: false,
-    images: []
+    images: [],
+    userdata: {},
+    photos: []
   }
 
   toast = notify.createShowQueue()
@@ -79,9 +83,7 @@ export default class App extends Component {
     })
   }
 
-  onClick = e => {
-    // this.setState({ loading : true })
-
+  onClick = () => {
     fetch(`http://localhost:4000/api/photo`, {
       method: 'GET'
     })
@@ -93,11 +95,13 @@ export default class App extends Component {
       }
       return res.json()
     })
-    .then(images => {
+    .then(photos => {
+    // this.toggleModal()
+      
       this.setState({
-        uploading: false, 
-        images
+        photos
       })
+
     })
     .catch(err => {
       err.json().then(e => {
@@ -125,13 +129,16 @@ export default class App extends Component {
   }
   
   render() {
-    const { loading, uploading, images } = this.state
+    
+    const { loading, uploading, images, userdata, photos } = this.state
     
     const content = () => {
       switch(true) {
         case loading:
-          return <Login/>
-            // return <Photos onClick={this.onClick} />        
+          // this.onClick()
+          //  <Photos onClick={this.onClick}/>    
+           return <Login userdata={userdata} />
+
         case uploading:
           return <Spinner />
         case images.length > 0:
@@ -140,6 +147,8 @@ export default class App extends Component {
                   removeImage={this.removeImage} 
                   onError={this.onError}
                  />
+        case (photos.length > 0 && loading): 
+          return <Display photos={photos} />
         default:
             return <Buttons onChange={this.onChange} />
       }

@@ -1,15 +1,16 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login';
- 
+// import {AuthProvider} from "react-check-auth"
 class Login extends React.Component {
   responseFacebook(response) {
-    console.log(response)
+
+    console.log('abc',response)
   }
  
-  render() {
+  render(props) {
     return (
       <FacebookLogin
-        appId="1088597931155576"
+        appId="837099180092875"
         autoLoad={true}
         fields="name,email,picture"
         callback={this.responseFacebook}
