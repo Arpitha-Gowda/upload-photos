@@ -127,7 +127,13 @@ export default class App extends Component {
     this.toast('Oops, something went wrong', 'custom', 2000, toastColor)
     this.setState({ images: this.filter(id) })
   }
-  
+
+  userData = data => {
+    console.log('data',data);
+    
+    this.setState({ userdata: data })
+  }
+
   render() {
     
     const { loading, uploading, images, userdata, photos } = this.state
@@ -137,7 +143,7 @@ export default class App extends Component {
         case loading:
           // this.onClick()
           //  <Photos onClick={this.onClick}/>    
-           return <Login userdata={userdata} />
+           return <Login userData={this.userData} />
 
         case uploading:
           return <Spinner />
@@ -147,7 +153,7 @@ export default class App extends Component {
                   removeImage={this.removeImage} 
                   onError={this.onError}
                  />
-        case (photos.length > 0 && loading): 
+        case userdata: 
           return <Display photos={photos} />
         default:
             return <Buttons onChange={this.onChange} />
